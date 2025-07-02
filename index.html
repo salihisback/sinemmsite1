@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Beni Seviyor Musun?</title>
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 5s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        bottom: 0;
+        opacity: 1;
+      }
+      100% {
+        bottom: 100vh;
+        opacity: 0;
+        transform: rotate(45deg) translateX(-50px);
+      }
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .question {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .gif-container img {
+      width: 150px;
+      margin: 10px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background: lightgreen;
+      transition: transform 0.3s ease;
+    }
+
+    #noBtn {
+      background: lightcoral;
+    }
+
+    #hugContainer {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    #hugContainer img {
+      width: 200px;
+    }
+
+    #bigHeart {
+      color: red;
+      font-size: 100px;
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+  <div class="question">Beni seviyor musun?</div>
+  <div class="gif-container">
+    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjZ6dDAwaGdlMXBzMmQweWt5MHkyd2Z1aGRkZW5oN250dmY4eGphMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Yht2UhIVNTjjiuYGLt/giphy.gif" alt="pig1">
+    
+  </div>
+  <div class="buttons">
+    <button id="yesBtn">Evet</button>
+    <button id="noBtn">Hayır</button>
+  </div>
+</div>
+
+<div id="hugContainer">
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjZrZnh6YWZ4eTBhbTVtemJyNjFlYmdhdTl4c2F5dzlkNXZwMGpxZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a2CcA2oKYn6Of6q6KF/giphy.gif" alt="hugging pigs">
+  <div id="bigHeart">❤️</div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const hugContainer = document.getElementById("hugContainer");
+  const mainContainer = document.getElementById("mainContainer");
+  const bigHeart = document.getElementById("bigHeart");
+
+  let yesSize = 1;
+
+  noBtn.addEventListener("click", () => {
+    yesSize += 0.2;
+    yesBtn.style.transform = `scale(${yesSize})`;
+
+    if (yesSize > 3) {
+      yesBtn.textContent = "EVETTT!!!";
+    }
+
+    if (yesSize > 5) {
+      yesBtn.style.fontSize = "3em";
+      yesBtn.style.padding = "20px 40px";
+    }
+
+    if (yesSize > 8) {
+      yesBtn.style.position = "absolute";
+      yesBtn.style.top = "50%";
+      yesBtn.style.left = "50%";
+      yesBtn.style.transform = "translate(-50%, -50%) scale(10)";
+      noBtn.style.display = "none";
+    }
+  });
+
+  yesBtn.addEventListener("click", () => {
+    mainContainer.style.display = "none";
+    hugContainer.style.display = "block";
+    setTimeout(() => {
+      bigHeart.style.display = "block";
+    }, 1000);
+  });
+
+  // create floating hearts
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
+
+
